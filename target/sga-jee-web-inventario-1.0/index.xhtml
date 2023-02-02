@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Sistema de Inventario de Equipos</title>
+    </h:head>
+
+    <h:body>
+        <h2>Inventario de equipos</h2>
+        <h:form>
+            <h:commandButton value="Listar accesorios" action="listadoAccesorios" />
+        </h:form>
+        <p:spacer height="10px"/>
+        <h:form>
+            <h:commandButton value="Mostrar Descripciones" action="listadoDescripcion" />
+        </h:form>
+        <p:spacer height="10px"/>
+        <h:form>
+            <h:commandButton value="Mostrar Equipos" action="listadoGeneral" />
+        </h:form>
+        <p:spacer height="10px"/>
+        <h:form>
+            <h:commandButton value="Mostrar Softwares" action="listadoSoftware" />
+        </h:form>
+        <p:spacer height="10px"/>
+        <h:form>
+            <h:commandButton value="Mostrar Valor de equipos" action="listadoValor" />
+        </h:form>
+    </h:body>
+</html>

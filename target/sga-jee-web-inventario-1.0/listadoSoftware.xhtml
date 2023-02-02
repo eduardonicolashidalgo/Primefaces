@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Software</title>
+    </h:head>
+    <h:body>
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <h:form prependId="false">
+
+            <p:growl id="messages" showDetail="true" />
+            <p:messages />
+
+            <p:dataTable 
+                id="software" 
+                var="software" 
+                value="#{softwareBean.software}" 
+                editable="true" 
+                rowKey="#{software.idSoftware}"
+                selection="#{softwareBean.softwareSeleccionado}" 
+                selectionMode="single">
+                
+                <f:facet name="header">  
+                    Lista de Software 
+                </f:facet>
+
+                <p:column headerText="Sistema Operativo">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{software.sistemaOperativo}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{software.sistemaOperativo}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Pack Service">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{software.soServicePack}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{software.soServicePack}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Ofimatica">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{software.ofimatica}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{software.ofimatica}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Regresar" action="index" />
+                    <p:spacer height="5px;"/>
+                    <p:commandButton value="Agregar" actionListener="#{softwareBean.reiniciarSoftwareSeleccionado}" oncomplete="PF('softwareDialogo').show();" update="software">
+                        <p:ajax event="dialogReturn" update="software"/>
+                    </p:commandButton>
+                </f:facet>
+                <p:column headerText="Opciones" style="width:50px">
+                    <p:rowEditor />
+                </p:column>
+
+                <p:ajax event="rowEdit" listener="#{softwareBean.editListener}">
+                </p:ajax>
+            </p:dataTable>
+
+            <p:contextMenu for="software">
+                <p:menuitem value="Eliminar" update="software" icon="ui-icon-close" actionListener="#{softwareBean.eliminarSoftware}" ajax="false"/>
+            </p:contextMenu>
+        </h:form>
+        
+        <h:form id="dialogoForm" prependId="false">
+            <p:dialog header="Agregar Software" widgetVar="softwareDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="softwareDetalle" style="text-align:center;">
+                    <p:panelGrid  columns="2" columnClasses="label,value">
+                        <h:outputText value="Direccion IP: " />
+                        <h:inputText value="#{softwareBean.softwareSeleccionado.sistemaOperativo}" />
+
+                        <h:outputText value="Responsable: " />
+                        <h:inputText value="#{softwareBean.softwareSeleccionado.soServicePack}" />
+
+                        <h:outputText value="Departamento asignado: " />
+                        <h:inputText value="#{softwareBean.softwareSeleccionado.ofimatica}" />
+                        
+                        <f:facet name="footer">
+                            <h:commandButton value="Agregar" actionListener="#{softwareBean.agregarSoftware}" />
+                        </f:facet>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+
+</html>

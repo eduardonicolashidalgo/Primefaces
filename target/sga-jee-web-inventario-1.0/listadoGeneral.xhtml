@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Equipos</title>
+    </h:head>
+    <h:body>
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <h:form prependId="false">
+
+            <p:growl id="messages" showDetail="true" />
+            <p:dataTable 
+                id="general" 
+                var="general" 
+                value="#{generalBean.general}" 
+                editable="true" 
+                rowKey="#{general.idGeneral}"
+                selection="#{generalBean.generalSeleccionado}" 
+                selectionMode="single">
+                <f:facet name="header">  
+                    Lista de Equipos 
+                </f:facet>
+
+                <p:column headerText="Nombre">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.nombreEquipo}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.nombreEquipo}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Numero Activo Fijo">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.numeroActivoFijo}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.numeroActivoFijo}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Pantalla">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.pantalla}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.pantalla}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Marca">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.marca}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.marca}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Modelo">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.modelo}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.modelo}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Numero de Serie">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.serie}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.serie}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Procesador">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.procesador}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.procesador}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Velocidad">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.velocidad}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.velocidad}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Memoria">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.memoria}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.memoria}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="HDD 1">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.hdd1}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.hdd1}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="HDD 2">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{general.hdd2}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{general.hdd2}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Regresar" action="index" />
+                    <p:spacer height="5px;"/>
+                    <p:commandButton value="Agregar" actionListener="#{generalBean.reiniciarGeneralSeleccionado}" oncomplete="PF('generalDialogo').show();" update="general">
+                        <p:ajax event="dialogReturn" update="general"/>
+                    </p:commandButton>
+                </f:facet>
+
+                <p:column headerText="Opciones" style="width:50px">
+                    <p:rowEditor />
+                </p:column>
+
+                <p:ajax event="rowEdit" listener="#{generalBean.editListener}">
+                </p:ajax>
+            </p:dataTable>
+
+
+
+            <p:contextMenu for="general">
+                <p:menuitem value="Eliminar" update="general" icon="ui-icon-close" actionListener="#{generalBean.eliminarGeneral}" ajax="false"/>
+            </p:contextMenu>
+        </h:form>
+
+        <h:form id="dialogoForm" prependId="false">
+            <p:dialog header="Agregar Equipo" widgetVar="generalDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="generalDetalle" style="text-align:center;">
+                    <p:panelGrid  columns="2" columnClasses="label,value">
+                        <h:outputText value="Nombre Equipo: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.nombreEquipo}" />
+
+                        <h:outputText value="Numero Activo Fijo: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.numeroActivoFijo}" />
+
+                        <h:outputText value="Pantalla: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.pantalla}" />
+                        
+                        <h:outputText value="Marca: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.marca}" />
+                        
+                        <h:outputText value="Modelo: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.modelo}" />
+                        
+                        <h:outputText value="Serie: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.serie}" />
+                        
+                        <h:outputText value="Procesador: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.procesador}" />
+                        
+                        <h:outputText value="Velocidad: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.velocidad}" />
+                        
+                        <h:outputText value="Memoria: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.memoria}" />
+                        
+                        <h:outputText value="HHD1: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.hdd1}" />
+                        
+                        <h:outputText value="HDD2: " />
+                        <h:inputText value="#{generalBean.generalSeleccionado.hdd2}" />
+                        
+                        <f:facet name="footer">
+                            <h:commandButton value="Agregar" actionListener="#{generalBean.agregarGeneral}" />
+                        </f:facet>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+
+</html>
